@@ -1,6 +1,13 @@
 const mongoose = require("mongoose");
-const { boolean } = require("webidl-conversions");
-const ObjectId = mongoose.Schema.Types.ObjectId;
+// const { boolean } = require("webidl-conversions");
+  const ObjectId = mongoose.Schema.Types.ObjectId;
+// joi.ObjectId = require('joi-Objectid')(Joi)
+//  const isValid = ObjectId.isValid
+  // isValid = mongoose.Schema.Types.ObjectId.isValid
+// var isValid = mongoose.Types.ObjectId.isValid(ObjectId);
+// if(isValid == false){
+//   return "u are a ";
+// }
 
 const blogSchema = new mongoose.Schema(
   {
@@ -12,9 +19,9 @@ const blogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    authorId: {
+       authorId: {
       type: ObjectId,
-      ref:"Author",
+     ref:"Author",
       required: true,
     },
     tags:{

@@ -1,33 +1,49 @@
-// const { count } = require("console")
-const { request } = require("http");
-const BlogModel = require("../models/blogModel");
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const createBlog = async function (req, res) {
-    try{
-        let data = req.body;
-      
-        let savedData = await BlogModel.create(data);
-        res.status(201).send({ msg: savedData });
-    }catch (err) {
-        console.log("This is the error :", err.message)
-        res.status(400).send({ msg: "Error", error: "invalid request" })
-    }
-};
+const blogSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    body: {
+        type: String,
+        required: true
+    },
+    authorId: {
+        type: ObjectId,
+        ref: 'AuthModel',
+        required: true
+    },
+    tags: {
+        type: []
+    },
+    category: {
+        type: String,
+        required: true,
+        examples: ["technology", "entertainment", "life style", "food", "fashion"]
+    },
+    subcategory: {
+        type: [],
+        examples: ["web development", " AI", "ML", "comedy", "circus", "lifestyles", "vegeterian", "Non vegeterian", "Man Fashion", "Women Fashion", "Kid Fashion"]
+    },
+    
+    isDeleted: {
+        type: Boolean,
+        default: false
+    },
+    publishedAt: {
+        type: Number
+    },
+    isPublished: {
+        type: Boolean,
+        default: false
+    },
+    
+},
+{ timestamps: true }
+);
 
-// const createBook = async function (req, res) {
-//     try {
-//         let data = req.body
-//         console.log(data)
-//         if ( Object.keys(data).length != 0) {
-//             let savedData = await BookModel.create(data)
-//             res.status(201).send({ msg: savedData })
-//         }
-//         else res.status(400).send({ msg: "BAD REQUEST"})
-//     }
-//     catch (err) {
-//         console.log("This is the error :", err.message)
-//         res.status(500).send({ msg: "Error", error: err.message })
-//     }
+const blogModel = mongoose.model('blogModel', blogSchema);
 
-
-module.exports.createBlog = createBlog;
+module.exports = blogModel;
